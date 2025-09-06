@@ -1,40 +1,20 @@
-// Local Express server to run all API endpoints
+// Main API handler for Vercel deployment
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import songsSearch from './api/songs/search.js';
-import songsDetails from './api/songs/details.js';
-import songsFilter from './api/songs/filter.js';
-import albumsSearch from './api/albums/search.js';
-import albumsDetails from './api/albums/details.js';
-import albumsFilter from './api/albums/filter.js';
-import artistsSearch from './api/artists/search.js';
-import artistsDetails from './api/artists/details.js';
-import artistsTop from './api/artists/top.js';
-import playlistsSearch from './api/playlists/search.js';
-import playlistsDetails from './api/playlists/details.js';
-import playlistsFilter from './api/playlists/filter.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
 
-// Serve static files
-app.use(express.static('public'));
-
-// HTML UI route
-app.get('/ui', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
-
-// Homepage route
+// Homepage route - API documentation
 app.get('/', (req, res) => {
   res.json({
     title: "JioSaavn API Wrapper",
     description: "A comprehensive API wrapper for JioSaavn with search, filter, and details endpoints",
     version: "1.0.0",
-    baseUrl: `http://localhost:${process.env.PORT || 3001}`,
+    baseUrl: `https://your-app.vercel.app`,
     endpoints: {
       songs: {
         search: {
@@ -134,28 +114,6 @@ app.get('/', (req, res) => {
   });
 });
 
-// Songs
-app.get('/api/songs/search', songsSearch);
-app.get('/api/songs/details', songsDetails);
-app.get('/api/songs/filter', songsFilter);
-// Albums
-app.get('/api/albums/search', albumsSearch);
-app.get('/api/albums/details', albumsDetails);
-app.get('/api/albums/filter', albumsFilter);
-// Artists
-app.get('/api/artists/search', artistsSearch);
-app.get('/api/artists/details', artistsDetails);
-app.get('/api/artists/top', artistsTop);
-// Playlists
-app.get('/api/playlists/search', playlistsSearch);
-app.get('/api/playlists/details', playlistsDetails);
-app.get('/api/playlists/filter', playlistsFilter);
-
 app.use((req, res) => res.status(404).json({ error: 'Not found' }));
 
-const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-  console.log(`API Documentation: http://localhost:${PORT}/`);
-  console.log(`HTML UI: http://localhost:${PORT}/ui`);
-});
+export default app;
