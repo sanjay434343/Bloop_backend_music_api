@@ -1,6 +1,4 @@
 // Helper for fetching and caching
-import fetch from 'node-fetch';
-
 const BASE_URL = 'https://jiosavan-api-with-playlist.vercel.app/api';
 
 export async function fetchFromJioSaavn(endpoint, params = {}) {
@@ -10,7 +8,21 @@ export async function fetchFromJioSaavn(endpoint, params = {}) {
       url.searchParams.append(key, value);
     }
   });
-  const response = await fetch(url.toString());
-  if (!response.ok) throw new Error('Failed to fetch from JioSaavn API');
-  return response.json();
+  
+  try {
+    const response = await fetch(url.toString(), {
+      headers: {
+        'User-Agent': 'JioSaavn-API-Wrapper/1.0.0'
+      }
+    });
+    
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error('Fetch error:', error);
+    throw new Error(`Failed to fetch from JioSaavn API: ${error.message}`);
+  }
 }

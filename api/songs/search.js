@@ -2,8 +2,19 @@
 import { fetchFromJioSaavn } from '../utils/fetcher.js';
 
 export default async function handler(req, res) {
+  // Add CORS headers
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  
+  if (req.method === 'OPTIONS') {
+    res.status(200).end();
+    return;
+  }
+
   const { query, language, year, minDuration, maxDuration, sort, limit = 30 } = req.query;
   if (!query) return res.status(400).json({ error: 'Missing query param' });
+  
   try {
     // Get raw data with pagination parameters
     const data = await fetchFromJioSaavn('/search/songs', { 
@@ -38,6 +49,7 @@ export default async function handler(req, res) {
 
     res.json({ results });
   } catch (e) {
+    console.error('API Error:', e);
     res.status(500).json({ error: e.message });
   }
 }

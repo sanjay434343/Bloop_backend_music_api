@@ -3,8 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JioSaavn API Wrapper - Tester</title>
+    <title>JioSaavn API Wrapper - Documentation</title>
     <style>
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #6c757d;
+            --success-color: #28a745;
+            --dark-color: #343a40;
+            --light-color: #f8f9fa;
+            --border-color: #dee2e6;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -12,481 +21,754 @@
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
+            color: var(--dark-color);
+            scroll-behavior: smooth;
         }
-        
+
+        /* Navigation */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 6rem 2rem;
+            text-align: center;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: white;
+            color: var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-outline:hover {
+            background: white;
+            color: var(--primary-color);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 6rem 2rem;
+            background: var(--light-color);
+        }
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
         }
-        
-        .header {
+
+        .section-title {
             text-align: center;
-            color: white;
-            margin-bottom: 30px;
-        }
-        
-        .header h1 {
             font-size: 2.5rem;
-            margin-bottom: 10px;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--dark-color);
         }
-        
-        .header p {
+
+        .section-subtitle {
+            text-align: center;
             font-size: 1.1rem;
-            opacity: 0.9;
+            color: var(--secondary-color);
+            margin-bottom: 4rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
-        
-        .main-content {
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
             background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark-color);
+        }
+
+        .feature-card p {
+            color: var(--secondary-color);
+            line-height: 1.6;
+        }
+
+        /* API Documentation */
+        .api-docs {
+            padding: 6rem 2rem;
+        }
+
+        .endpoint-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .endpoint-card {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
             overflow: hidden;
+            transition: all 0.3s ease;
         }
-        
-        .tabs {
+
+        .endpoint-card:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 8px 25px rgba(0,123,255,0.15);
+        }
+
+        .endpoint-header {
+            background: var(--light-color);
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .endpoint-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--dark-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .endpoint-method {
+            display: inline-block;
+            background: var(--success-color);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .endpoint-body {
+            padding: 1.5rem;
+        }
+
+        .endpoint-url {
+            background: #f1f3f4;
+            padding: 0.75rem;
+            border-radius: 6px;
+            font-family: 'Monaco', monospace;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+            word-break: break-all;
+        }
+
+        .params-list {
+            list-style: none;
+            margin-bottom: 1rem;
+        }
+
+        .params-list li {
+            padding: 0.25rem 0;
+            font-size: 0.875rem;
+            color: var(--secondary-color);
+        }
+
+        .param-name {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .try-button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .try-button:hover {
+            background: #0056b3;
+            transform: translateY(-1px);
+        }
+
+        /* Interactive Demo */
+        .demo {
+            background: var(--light-color);
+            padding: 6rem 2rem;
+        }
+
+        .demo-container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .demo-tabs {
             display: flex;
-            background: #f8f9fa;
-            border-bottom: 2px solid #e9ecef;
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: 2rem;
         }
-        
-        .tab {
-            flex: 1;
-            padding: 15px 20px;
+
+        .demo-tab {
+            padding: 1rem 1.5rem;
             background: none;
             border: none;
             cursor: pointer;
-            font-size: 1rem;
             font-weight: 600;
-            color: #6c757d;
+            color: var(--secondary-color);
             transition: all 0.3s ease;
         }
-        
-        .tab.active {
-            background: white;
-            color: #007bff;
-            border-bottom: 3px solid #007bff;
+
+        .demo-tab.active {
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--primary-color);
         }
-        
-        .tab:hover {
-            background: #e9ecef;
-        }
-        
-        .content {
-            padding: 30px;
-        }
-        
-        .tab-content {
+
+        .demo-content {
             display: none;
         }
-        
-        .tab-content.active {
+
+        .demo-content.active {
             display: block;
         }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 600;
-            color: #495057;
-        }
-        
-        input, select {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #e9ecef;
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: border-color 0.3s ease;
-        }
-        
-        input:focus, select:focus {
-            outline: none;
-            border-color: #007bff;
-        }
-        
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-        
-        .btn {
-            background: linear-gradient(135deg, #007bff, #0056b3);
-            color: white;
-            padding: 12px 30px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            margin-right: 10px;
-        }
-        
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,123,255,0.3);
-        }
-        
-        .btn-secondary {
-            background: linear-gradient(135deg, #6c757d, #495057);
-        }
-        
-        .results {
-            margin-top: 30px;
-            padding: 20px;
-            background: #f8f9fa;
-            border-radius: 8px;
-            border-left: 4px solid #007bff;
-        }
-        
-        .results h3 {
-            margin-bottom: 15px;
-            color: #495057;
-        }
-        
-        pre {
-            background: #2d3748;
-            color: #e2e8f0;
-            padding: 20px;
-            border-radius: 8px;
-            overflow-x: auto;
-            font-size: 0.9rem;
-            line-height: 1.4;
-        }
-        
-        .loading {
-            text-align: center;
-            padding: 20px;
-            color: #6c757d;
-        }
-        
-        .error {
-            background: #f8d7da;
-            color: #721c24;
-            border-left-color: #dc3545;
-        }
-        
-        .quick-tests {
+
+        .quick-start {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-            margin-bottom: 30px;
+            gap: 1rem;
+            margin-bottom: 2rem;
         }
-        
-        .quick-test {
-            background: linear-gradient(135deg, #28a745, #20c997);
+
+        .quick-start-card {
+            background: linear-gradient(135deg, var(--success-color), #20c997);
             color: white;
-            padding: 15px;
+            padding: 1.5rem;
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s ease;
             text-align: center;
         }
-        
-        .quick-test:hover {
+
+        .quick-start-card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(40,167,69,0.3);
+            box-shadow: 0 8px 25px rgba(40,167,69,0.25);
         }
-        
-        .quick-test h4 {
-            margin-bottom: 5px;
+
+        .quick-start-card h4 {
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
         }
-        
-        .quick-test p {
+
+        .quick-start-card p {
             font-size: 0.9rem;
             opacity: 0.9;
+        }
+
+        .response-area {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            min-height: 200px;
+            font-family: 'Monaco', monospace;
+            font-size: 0.875rem;
+            line-height: 1.5;
+            overflow-x: auto;
+        }
+
+        .loading {
+            text-align: center;
+            color: var(--secondary-color);
+            padding: 2rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark-color);
+            color: white;
+            padding: 3rem 2rem 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>🎵 JioSaavn API Wrapper</h1>
-            <p>Test and explore music search capabilities</p>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">🎵 JioSaavn API</a>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#docs">Documentation</a></li>
+                <li><a href="#demo">Try It</a></li>
+                <li><a href="#" onclick="window.open('/', '_blank')">JSON API</a></li>
+            </ul>
         </div>
-        
-        <div class="main-content">
-            <div class="tabs">
-                <button class="tab active" onclick="switchTab('songs')">Songs</button>
-                <button class="tab" onclick="switchTab('albums')">Albums</button>
-                <button class="tab" onclick="switchTab('artists')">Artists</button>
-                <button class="tab" onclick="switchTab('playlists')">Playlists</button>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <h1>JioSaavn API Wrapper</h1>
+            <p>Access millions of songs, albums, artists, and playlists from JioSaavn with our powerful and easy-to-use RESTful API</p>
+            <div class="cta-buttons">
+                <a href="#demo" class="btn btn-primary">Try Live Demo</a>
+                <a href="#docs" class="btn btn-outline">View Documentation</a>
             </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <h2 class="section-title">Why Choose Our API?</h2>
+            <p class="section-subtitle">Built for developers who want reliable access to JioSaavn's music catalog</p>
             
-            <div class="content">
-                <!-- Songs Tab -->
-                <div id="songs" class="tab-content active">
-                    <div class="quick-tests">
-                        <div class="quick-test" onclick="quickTest('songs', 'tamil songs', {language: 'tamil', limit: 10})">
-                            <h4>Tamil Songs</h4>
-                            <p>Search popular Tamil music</p>
-                        </div>
-                        <div class="quick-test" onclick="quickTest('songs', 'arijit singh', {sort: 'popularity', limit: 15})">
-                            <h4>Arijit Singh</h4>
-                            <p>Popular songs by Arijit Singh</p>
-                        </div>
-                        <div class="quick-test" onclick="quickTest('songs', 'bollywood', {language: 'hindi', year: 2024, limit: 20})">
-                            <h4>Bollywood 2024</h4>
-                            <p>Latest Bollywood hits</p>
-                        </div>
-                    </div>
-                    
-                    <form onsubmit="testAPI('songs', event)">
-                        <div class="form-group">
-                            <label>Search Query *</label>
-                            <input type="text" name="query" placeholder="Enter song name, artist, or keywords" required>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Language</label>
-                                <select name="language">
-                                    <option value="">All Languages</option>
-                                    <option value="hindi">Hindi</option>
-                                    <option value="tamil">Tamil</option>
-                                    <option value="telugu">Telugu</option>
-                                    <option value="punjabi">Punjabi</option>
-                                    <option value="english">English</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Year</label>
-                                <input type="number" name="year" placeholder="e.g., 2024" min="1950" max="2030">
-                            </div>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Min Duration (seconds)</label>
-                                <input type="number" name="minDuration" placeholder="e.g., 180">
-                            </div>
-                            <div class="form-group">
-                                <label>Max Duration (seconds)</label>
-                                <input type="number" name="maxDuration" placeholder="e.g., 300">
-                            </div>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Sort By</label>
-                                <select name="sort">
-                                    <option value="">Default</option>
-                                    <option value="popularity">Popularity</option>
-                                    <option value="latest">Latest</option>
-                                    <option value="duration">Duration</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Limit</label>
-                                <input type="number" name="limit" value="20" min="1" max="50">
-                            </div>
-                        </div>
-                        
-                        <button type="submit" class="btn">Search Songs</button>
-                        <button type="button" class="btn btn-secondary" onclick="clearResults()">Clear</button>
-                    </form>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Powerful Search</h3>
+                    <p>Search across songs, albums, artists, and playlists with advanced filtering options including language, year, duration, and popularity sorting.</p>
                 </div>
                 
-                <!-- Albums Tab -->
-                <div id="albums" class="tab-content">
-                    <div class="quick-tests">
-                        <div class="quick-test" onclick="quickTest('albums', 'ar rahman', {limit: 15})">
-                            <h4>AR Rahman Albums</h4>
-                            <p>Discover Rahman's music</p>
-                        </div>
-                        <div class="quick-test" onclick="quickTest('albums', 'vikram', {language: 'tamil', limit: 10})">
-                            <h4>Tamil Albums</h4>
-                            <p>Popular Tamil movie albums</p>
-                        </div>
-                    </div>
-                    
-                    <form onsubmit="testAPI('albums', event)">
-                        <div class="form-group">
-                            <label>Search Query *</label>
-                            <input type="text" name="query" placeholder="Enter album name or artist" required>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Language</label>
-                                <select name="language">
-                                    <option value="">All Languages</option>
-                                    <option value="hindi">Hindi</option>
-                                    <option value="tamil">Tamil</option>
-                                    <option value="telugu">Telugu</option>
-                                    <option value="punjabi">Punjabi</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Year</label>
-                                <input type="number" name="year" placeholder="e.g., 2024">
-                            </div>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Sort By</label>
-                                <select name="sort">
-                                    <option value="">Default</option>
-                                    <option value="popularity">Popularity</option>
-                                    <option value="latest">Latest</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Limit</label>
-                                <input type="number" name="limit" value="20" min="1" max="50">
-                            </div>
-                        </div>
-                        
-                        <button type="submit" class="btn">Search Albums</button>
-                        <button type="button" class="btn btn-secondary" onclick="clearResults()">Clear</button>
-                    </form>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Fast & Reliable</h3>
+                    <p>Optimized endpoints with intelligent caching and error handling. Get up to 50 results per request with pagination support.</p>
                 </div>
                 
-                <!-- Artists Tab -->
-                <div id="artists" class="tab-content">
-                    <div class="quick-tests">
-                        <div class="quick-test" onclick="quickTest('artists', 'arijit singh', {limit: 5})">
-                            <h4>Find Arijit Singh</h4>
-                            <p>Search for the popular singer</p>
-                        </div>
-                        <div class="quick-test" onclick="quickTest('artists', 'shreya ghoshal', {limit: 5})">
-                            <h4>Shreya Ghoshal</h4>
-                            <p>Find the melody queen</p>
-                        </div>
-                    </div>
-                    
-                    <form onsubmit="testAPI('artists', event)">
-                        <div class="form-group">
-                            <label>Search Query *</label>
-                            <input type="text" name="query" placeholder="Enter artist name" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label>Limit</label>
-                            <input type="number" name="limit" value="15" min="1" max="50">
-                        </div>
-                        
-                        <button type="submit" class="btn">Search Artists</button>
-                        <button type="button" class="btn btn-secondary" onclick="clearResults()">Clear</button>
-                    </form>
+                <div class="feature-card">
+                    <div class="feature-icon">🔧</div>
+                    <h3>Developer Friendly</h3>
+                    <p>Clean RESTful API with consistent JSON responses, comprehensive documentation, and interactive testing interface.</p>
                 </div>
                 
-                <!-- Playlists Tab -->
-                <div id="playlists" class="tab-content">
-                    <div class="quick-tests">
-                        <div class="quick-test" onclick="quickTest('playlists', 'bollywood', {language: 'hindi', limit: 10})">
-                            <h4>Bollywood Playlists</h4>
-                            <p>Popular Hindi playlists</p>
-                        </div>
-                        <div class="quick-test" onclick="quickTest('playlists', 'love songs', {limit: 15})">
-                            <h4>Love Songs</h4>
-                            <p>Romantic music collections</p>
-                        </div>
-                    </div>
-                    
-                    <form onsubmit="testAPI('playlists', event)">
-                        <div class="form-group">
-                            <label>Search Query *</label>
-                            <input type="text" name="query" placeholder="Enter playlist theme or name" required>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Language</label>
-                                <select name="language">
-                                    <option value="">All Languages</option>
-                                    <option value="hindi">Hindi</option>
-                                    <option value="tamil">Tamil</option>
-                                    <option value="telugu">Telugu</option>
-                                    <option value="punjabi">Punjabi</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Sort By</label>
-                                <select name="sort">
-                                    <option value="">Default</option>
-                                    <option value="popularity">Popularity</option>
-                                    <option value="latest">Latest</option>
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label>Limit</label>
-                            <input type="number" name="limit" value="20" min="1" max="50">
-                        </div>
-                        
-                        <button type="submit" class="btn">Search Playlists</button>
-                        <button type="button" class="btn btn-secondary" onclick="clearResults()">Clear</button>
-                    </form>
+                <div class="feature-card">
+                    <div class="feature-icon">🌐</div>
+                    <h3>Multi-Language</h3>
+                    <p>Support for Hindi, Tamil, Telugu, Punjabi, English and many more languages. Filter content by specific languages easily.</p>
                 </div>
                 
-                <div id="results"></div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Rich Metadata</h3>
+                    <p>Get complete song information including artists, albums, duration, play counts, release years, and high-quality artwork.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>No Authentication</h3>
+                    <p>Start using immediately without API keys, registration, or rate limits. Perfect for prototypes and production apps.</p>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
+
+    <!-- API Documentation -->
+    <section class="api-docs" id="docs">
+        <div class="container">
+            <h2 class="section-title">API Endpoints</h2>
+            <p class="section-subtitle">Complete reference for all available endpoints and parameters</p>
+            
+            <div class="endpoint-grid">
+                <!-- Songs -->
+                <div class="endpoint-card">
+                    <div class="endpoint-header">
+                        <div class="endpoint-title">Search Songs</div>
+                        <span class="endpoint-method">GET</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <div class="endpoint-url">/api/songs/search</div>
+                        <ul class="params-list">
+                            <li><span class="param-name">query</span> - Search term (required)</li>
+                            <li><span class="param-name">language</span> - Filter by language</li>
+                            <li><span class="param-name">year</span> - Filter by release year</li>
+                            <li><span class="param-name">sort</span> - Sort by popularity/latest/duration</li>
+                            <li><span class="param-name">limit</span> - Number of results (max 50)</li>
+                        </ul>
+                        <button class="try-button" onclick="tryEndpoint('songs', 'arijit singh', {sort: 'popularity', limit: 10})">Try Example</button>
+                    </div>
+                </div>
+
+                <!-- Albums -->
+                <div class="endpoint-card">
+                    <div class="endpoint-header">
+                        <div class="endpoint-title">Search Albums</div>
+                        <span class="endpoint-method">GET</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <div class="endpoint-url">/api/albums/search</div>
+                        <ul class="params-list">
+                            <li><span class="param-name">query</span> - Search term (required)</li>
+                            <li><span class="param-name">language</span> - Filter by language</li>
+                            <li><span class="param-name">year</span> - Filter by release year</li>
+                            <li><span class="param-name">sort</span> - Sort by popularity/latest</li>
+                            <li><span class="param-name">limit</span> - Number of results</li>
+                        </ul>
+                        <button class="try-button" onclick="tryEndpoint('albums', 'ar rahman', {limit: 8})">Try Example</button>
+                    </div>
+                </div>
+
+                <!-- Artists -->
+                <div class="endpoint-card">
+                    <div class="endpoint-header">
+                        <div class="endpoint-title">Search Artists</div>
+                        <span class="endpoint-method">GET</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <div class="endpoint-url">/api/artists/search</div>
+                        <ul class="params-list">
+                            <li><span class="param-name">query</span> - Artist name (required)</li>
+                            <li><span class="param-name">limit</span> - Number of results</li>
+                        </ul>
+                        <button class="try-button" onclick="tryEndpoint('artists', 'shreya ghoshal', {limit: 5})">Try Example</button>
+                    </div>
+                </div>
+
+                <!-- Playlists -->
+                <div class="endpoint-card">
+                    <div class="endpoint-header">
+                        <div class="endpoint-title">Search Playlists</div>
+                        <span class="endpoint-method">GET</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <div class="endpoint-url">/api/playlists/search</div>
+                        <ul class="params-list">
+                            <li><span class="param-name">query</span> - Search term (required)</li>
+                            <li><span class="param-name">language</span> - Filter by language</li>
+                            <li><span class="param-name">sort</span> - Sort by popularity/latest</li>
+                            <li><span class="param-name">limit</span> - Number of results</li>
+                        </ul>
+                        <button class="try-button" onclick="tryEndpoint('playlists', 'bollywood hits', {language: 'hindi', limit: 6})">Try Example</button>
+                    </div>
+                </div>
+
+                <!-- Song Details -->
+                <div class="endpoint-card">
+                    <div class="endpoint-header">
+                        <div class="endpoint-title">Song Details</div>
+                        <span class="endpoint-method">GET</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <div class="endpoint-url">/api/songs/details</div>
+                        <ul class="params-list">
+                            <li><span class="param-name">id</span> - Song ID (required)</li>
+                        </ul>
+                        <button class="try-button" onclick="alert('First search for songs to get an ID, then use /api/songs/details?id=SONG_ID')">Need Song ID</button>
+                    </div>
+                </div>
+
+                <!-- Artist Top Songs -->
+                <div class="endpoint-card">
+                    <div class="endpoint-header">
+                        <div class="endpoint-title">Artist Top Songs</div>
+                        <span class="endpoint-method">GET</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <div class="endpoint-url">/api/artists/top</div>
+                        <ul class="params-list">
+                            <li><span class="param-name">id</span> - Artist ID (required)</li>
+                        </ul>
+                        <button class="try-button" onclick="alert('First search for artists to get an ID, then use /api/artists/top?id=ARTIST_ID')">Need Artist ID</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Demo -->
+    <section class="demo" id="demo">
+        <div class="container">
+            <h2 class="section-title">Try It Live</h2>
+            <p class="section-subtitle">Test our API endpoints in real-time and see the responses</p>
+            
+            <div class="demo-container">
+                <div class="demo-tabs">
+                    <button class="demo-tab active" onclick="switchDemoTab('songs')">Songs</button>
+                    <button class="demo-tab" onclick="switchDemoTab('albums')">Albums</button>
+                    <button class="demo-tab" onclick="switchDemoTab('artists')">Artists</button>
+                    <button class="demo-tab" onclick="switchDemoTab('playlists')">Playlists</button>
+                </div>
+
+                <div id="songs-demo" class="demo-content active">
+                    <h3>Popular Song Searches</h3>
+                    <div class="quick-start">
+                        <div class="quick-start-card" onclick="tryEndpoint('songs', 'tamil songs', {language: 'tamil', limit: 8})">
+                            <h4>Tamil Hits</h4>
+                            <p>Popular Tamil songs</p>
+                        </div>
+                        <div class="quick-start-card" onclick="tryEndpoint('songs', 'arijit singh', {sort: 'popularity', limit: 10})">
+                            <h4>Arijit Singh</h4>
+                            <p>Top songs by Arijit</p>
+                        </div>
+                        <div class="quick-start-card" onclick="tryEndpoint('songs', 'bollywood 2024', {language: 'hindi', year: 2024, limit: 12})">
+                            <h4>Latest Bollywood</h4>
+                            <p>2024 Hindi songs</p>
+                        </div>
+                        <div class="quick-start-card" onclick="tryEndpoint('songs', 'punjabi', {language: 'punjabi', sort: 'latest', limit: 8})">
+                            <h4>Punjabi Music</h4>
+                            <p>Latest Punjabi hits</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="albums-demo" class="demo-content">
+                    <h3>Popular Album Searches</h3>
+                    <div class="quick-start">
+                        <div class="quick-start-card" onclick="tryEndpoint('albums', 'ar rahman', {limit: 10})">
+                            <h4>AR Rahman</h4>
+                            <p>Albums by the maestro</p>
+                        </div>
+                        <div class="quick-start-card" onclick="tryEndpoint('albums', 'vikram tamil', {language: 'tamil', limit: 6})">
+                            <h4>Tamil Albums</h4>
+                            <p>Popular Tamil soundtracks</p>
+                        </div>
+                        <div class="quick-start-card" onclick="tryEndpoint('albums', 'kgf', {sort: 'popularity', limit: 5})">
+                            <h4>KGF Soundtrack</h4>
+                            <p>Popular movie albums</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="artists-demo" class="demo-content">
+                    <h3>Find Your Favorite Artists</h3>
+                    <div class="quick-start">
+                        <div class="quick-start-card" onclick="tryEndpoint('artists', 'shreya ghoshal', {limit: 5})">
+                            <h4>Shreya Ghoshal</h4>
+                            <p>The melody queen</p>
+                        </div>
+                        <div class="quick-start-card" onclick="tryEndpoint('artists', 'honey singh', {limit: 4})">
+                            <h4>Yo Yo Honey Singh</h4>
+                            <p>Popular rapper & singer</p>
+                        </div>
+                        <div class="quick-start-card" onclick="tryEndpoint('artists', 'sonu nigam', {limit: 3})">
+                            <h4>Sonu Nigam</h4>
+                            <p>Legendary playback singer</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="playlists-demo" class="demo-content">
+                    <h3>Discover Curated Playlists</h3>
+                    <div class="quick-start">
+                        <div class="quick-start-card" onclick="tryEndpoint('playlists', 'love songs', {limit: 8})">
+                            <h4>Love Songs</h4>
+                            <p>Romantic collections</p>
+                        </div>
+                        <div class="quick-start-card" onclick="tryEndpoint('playlists', 'workout', {limit: 6})">
+                            <h4>Workout Music</h4>
+                            <p>High energy playlists</p>
+                        </div>
+                        <div class="quick-start-card" onclick="tryEndpoint('playlists', 'bollywood party', {language: 'hindi', limit: 5})">
+                            <h4>Bollywood Party</h4>
+                            <p>Hindi party songs</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="response-area" id="response">
+                    <div style="text-align: center; color: #a0aec0; padding: 2rem;">
+                        👆 Click any card above to see the API response
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#" onclick="window.open('/', '_blank')">API Documentation</a>
+                <a href="#features">Features</a>
+                <a href="#docs">Endpoints</a>
+                <a href="#demo">Demo</a>
+            </div>
+            <p>&copy; 2024 JioSaavn API Wrapper. Built for developers, by developers.</p>
+        </div>
+    </footer>
 
     <script>
-        function switchTab(tabName) {
-            // Hide all tab contents
-            const tabContents = document.querySelectorAll('.tab-content');
-            tabContents.forEach(content => content.classList.remove('active'));
+        function switchDemoTab(tabName) {
+            // Hide all demo contents
+            const demoContents = document.querySelectorAll('.demo-content');
+            demoContents.forEach(content => content.classList.remove('active'));
             
-            // Remove active class from all tabs
-            const tabs = document.querySelectorAll('.tab');
-            tabs.forEach(tab => tab.classList.remove('active'));
+            // Remove active class from all demo tabs
+            const demoTabs = document.querySelectorAll('.demo-tab');
+            demoTabs.forEach(tab => tab.classList.remove('active'));
             
-            // Show selected tab content
-            document.getElementById(tabName).classList.add('active');
+            // Show selected demo content
+            document.getElementById(tabName + '-demo').classList.add('active');
             
             // Add active class to clicked tab
             event.target.classList.add('active');
-            
-            // Clear results when switching tabs
-            clearResults();
         }
         
-        async function testAPI(category, event) {
-            event.preventDefault();
-            
-            const form = event.target;
-            const formData = new FormData(form);
-            const params = new URLSearchParams();
-            
-            for (let [key, value] of formData.entries()) {
-                if (value.trim()) {
-                    params.append(key, value.trim());
-                }
-            }
-            
-            const url = `/api/${category}/search?${params.toString()}`;
-            await makeRequest(url);
-        }
-        
-        async function quickTest(category, query, extraParams = {}) {
+        async function tryEndpoint(category, query, extraParams = {}) {
+            const responseArea = document.getElementById('response');
             const params = new URLSearchParams({ query, ...extraParams });
             const url = `/api/${category}/search?${params.toString()}`;
-            await makeRequest(url);
-        }
-        
-        async function makeRequest(url) {
-            const resultsDiv = document.getElementById('results');
             
             // Show loading
-            resultsDiv.innerHTML = `
-                <div class="results">
-                    <div class="loading">🔄 Loading...</div>
+            responseArea.innerHTML = `
+                <div style="text-align: center; color: #a0aec0; padding: 2rem;">
+                    🔄 Loading...
                 </div>
             `;
             
@@ -494,32 +776,41 @@
                 const response = await fetch(url);
                 const data = await response.json();
                 
-                let resultsClass = 'results';
-                if (!response.ok) {
-                    resultsClass += ' error';
-                }
-                
-                resultsDiv.innerHTML = `
-                    <div class="${resultsClass}">
-                        <h3>API Response (${response.status})</h3>
-                        <p><strong>URL:</strong> ${url}</p>
-                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                responseArea.innerHTML = `
+                    <div style="color: #48bb78; margin-bottom: 1rem;">
+                        <strong>✅ ${response.status} ${response.statusText}</strong>
                     </div>
+                    <div style="color: #e2e8f0; margin-bottom: 1rem; font-size: 0.875rem;">
+                        <strong>URL:</strong> ${url}
+                    </div>
+                    <pre style="white-space: pre-wrap; color: #e2e8f0;">${JSON.stringify(data, null, 2)}</pre>
                 `;
             } catch (error) {
-                resultsDiv.innerHTML = `
-                    <div class="results error">
-                        <h3>Error</h3>
-                        <p><strong>URL:</strong> ${url}</p>
-                        <pre>Error: ${error.message}</pre>
+                responseArea.innerHTML = `
+                    <div style="color: #f56565; margin-bottom: 1rem;">
+                        <strong>❌ Error</strong>
                     </div>
+                    <div style="color: #e2e8f0; margin-bottom: 1rem; font-size: 0.875rem;">
+                        <strong>URL:</strong> ${url}
+                    </div>
+                    <pre style="color: #f56565;">Error: ${error.message}</pre>
                 `;
             }
         }
-        
-        function clearResults() {
-            document.getElementById('results').innerHTML = '';
-        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
     </script>
 </body>
 </html>
