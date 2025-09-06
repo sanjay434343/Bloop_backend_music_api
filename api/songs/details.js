@@ -24,6 +24,7 @@ function simplifySong(song) {
     language: song.language,
     playCount: parseInt(song.playCount) || 0,
     url: song.url,
-    image: Array.isArray(song.image) ? (song.image.find(i => i.quality === '500x500')?.url || song.image[0]?.url) : song.image
+    image: Array.isArray(song.image) ? (song.image.find(i => i.quality === '500x500')?.url || song.image[0]?.url) : song.image,
+    downloadUrl: song.downloadUrl || []
   };
 }

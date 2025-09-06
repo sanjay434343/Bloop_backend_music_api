@@ -3,6 +3,20 @@ import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+// Import all handlers
+import songsSearch from './api/songs/search.js';
+import songsDetails from './api/songs/details.js';
+import songsFilter from './api/songs/filter.js';
+import albumsSearch from './api/albums/search.js';
+import albumsDetails from './api/albums/details.js';
+import albumsFilter from './api/albums/filter.js';
+import artistsSearch from './api/artists/search.js';
+import artistsDetails from './api/artists/details.js';
+import artistsTop from './api/artists/top.js';
+import playlistsSearch from './api/playlists/search.js';
+import playlistsDetails from './api/playlists/details.js';
+import playlistsFilter from './api/playlists/filter.js';
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -109,10 +123,30 @@ app.get('/', (req, res) => {
         "bollywood hits",
         "punjabi songs",
         "ar rahman"
-      ]
+      ],
+      responseFormat: {
+        songs: {
+          downloadUrl: "Array of download links with different quality options (12kbps, 48kbps, 96kbps, 160kbps, 320kbps)",
+          availableQualities: ["12kbps", "48kbps", "96kbps", "160kbps", "320kbps"]
+        }
+      }
     }
   });
 });
+
+// API Routes
+app.get('/api/songs/search', songsSearch);
+app.get('/api/songs/details', songsDetails);
+app.get('/api/songs/filter', songsFilter);
+app.get('/api/albums/search', albumsSearch);
+app.get('/api/albums/details', albumsDetails);
+app.get('/api/albums/filter', albumsFilter);
+app.get('/api/artists/search', artistsSearch);
+app.get('/api/artists/details', artistsDetails);
+app.get('/api/artists/top', artistsTop);
+app.get('/api/playlists/search', playlistsSearch);
+app.get('/api/playlists/details', playlistsDetails);
+app.get('/api/playlists/filter', playlistsFilter);
 
 app.use((req, res) => res.status(404).json({ error: 'Not found' }));
 
