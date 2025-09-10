@@ -1,0 +1,32 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/**/*.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "public/**/*",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/ui",
+      "dest": "/public/index.html"
+    },
+    {
+      "src": "/api/songs/search",
+      "dest": "/api/songs/search.js"
+    },
+    {
+      "src": "/api/songs/details",
+      "dest": "/api/songs/details.js"
+    },
+    {
+      "src": "/api/songs/filter",
+      "dest": "/api/songs/filter.js"
+    },
+    {
+      "src": "/api/albums/search",
+}

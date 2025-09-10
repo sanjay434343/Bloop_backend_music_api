@@ -1,0 +1,22 @@
+{
+    "sourceFile": "api/playlists/search.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1757516001197,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1757516106358,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n       query, \r\n       page: 0,\r\n       limit: limit \r\n     });\r\n-    const results = (data.data?.results || data.results || []).map(playlist => simplifyPlaylist(playlist));\r\n+    const results = (data.data?.results || data.results || []).map(playlist => simplifyPlaylist(playlist)).filter(Boolean);\r\n     res.json({ results });\r\n   } catch (e) {\r\n     res.status(500).json({ error: e.message });\r\n   }\r\n"
+                }
+            ],
+            "date": 1757516001197,
+            "name": "Commit-0",
+            "content": "// /api/playlists/search\r\nimport { fetchFromJioSaavn } from '../utils/fetcher.js';\r\n\r\nexport default async function handler(req, res) {\r\n  const { query, limit = 30 } = req.query;\r\n  if (!query) return res.status(400).json({ error: 'Missing query param' });\r\n  try {\r\n    const data = await fetchFromJioSaavn('/search/playlists', { \r\n      query, \r\n      page: 0,\r\n      limit: limit \r\n    });\r\n    const results = (data.data?.results || data.results || []).map(playlist => simplifyPlaylist(playlist));\r\n    res.json({ results });\r\n  } catch (e) {\r\n    res.status(500).json({ error: e.message });\r\n  }\r\n}\r\n\r\nfunction simplifyPlaylist(playlist) {\r\n  return {\r\n    id: playlist.id,\r\n    title: playlist.name || playlist.title,\r\n    year: parseInt(playlist.year) || null,\r\n    language: playlist.language,\r\n    playCount: parseInt(playlist.playCount) || 0,\r\n    url: playlist.url,\r\n    image: Array.isArray(playlist.image) ? (playlist.image.find(i => i.quality === '500x500')?.url || playlist.image[0]?.url) : playlist.image\r\n  };\r\n}\r\n"
+        }
+    ]
+}

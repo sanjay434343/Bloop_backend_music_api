@@ -1,0 +1,22 @@
+{
+    "sourceFile": "api/albums/filter.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1757515998562,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1757516106331,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -37,9 +37,9 @@\n       query, \r\n       page: 0,\r\n       limit: limit \r\n     });\r\n-    let results = (data.data?.results || data.results || []).map(simplifyAlbum);\r\n+    let results = (data.data?.results || data.results || []).map(simplifyAlbum).filter(Boolean);\r\n     results = filterAlbums(results, { language, year });\r\n     results = sortAlbums(results, sort);\r\n     res.json({ results });\r\n   } catch (e) {\r\n"
+                }
+            ],
+            "date": 1757515998562,
+            "name": "Commit-0",
+            "content": "// /api/albums/filter\r\nimport { fetchFromJioSaavn } from '../utils/fetcher.js';\r\n\r\nfunction filterAlbums(albums, { language, year }) {\r\n  return albums.filter(album => {\r\n    let match = true;\r\n    if (language) match = match && album.language?.toLowerCase() === language.toLowerCase();\r\n    if (year) match = match && String(album.year) === String(year);\r\n    return match;\r\n  });\r\n}\r\n\r\nfunction sortAlbums(albums, sort) {\r\n  if (sort === 'latest') return albums.sort((a, b) => b.year - a.year);\r\n  if (sort === 'popularity') return albums.sort((a, b) => (b.playCount || 0) - (a.playCount || 0));\r\n  return albums;\r\n}\r\n\r\nfunction simplifyAlbum(album) {\r\n  return {\r\n    id: album.id,\r\n    title: album.name || album.title,\r\n    artists: album.artists?.primary?.map(a => a.name).join(', ') || album.primaryArtists,\r\n    year: parseInt(album.year) || null,\r\n    language: album.language,\r\n    playCount: parseInt(album.playCount) || 0,\r\n    url: album.url,\r\n    image: Array.isArray(album.image) ? (album.image.find(i => i.quality === '500x500')?.url || album.image[0]?.url) : album.image\r\n  };\r\n}\r\n\r\nexport default async function handler(req, res) {\r\n  const { query, language, year, sort, limit = 30 } = req.query;\r\n  if (!query) return res.status(400).json({ error: 'Missing query param' });\r\n  try {\r\n    const data = await fetchFromJioSaavn('/search/albums', { \r\n      query, \r\n      page: 0,\r\n      limit: limit \r\n    });\r\n    let results = (data.data?.results || data.results || []).map(simplifyAlbum);\r\n    results = filterAlbums(results, { language, year });\r\n    results = sortAlbums(results, sort);\r\n    res.json({ results });\r\n  } catch (e) {\r\n    res.status(500).json({ error: e.message });\r\n  }\r\n}\r\n"
+        }
+    ]
+}

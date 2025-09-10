@@ -1,0 +1,22 @@
+{
+    "sourceFile": "api/playlists/filter.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1757516003526,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1757516106318,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,9 +36,9 @@\n       query, \r\n       page: 0,\r\n       limit: limit \r\n     });\r\n-    let results = (data.data?.results || data.results || []).map(simplifyPlaylist);\r\n+    let results = (data.data?.results || data.results || []).map(simplifyPlaylist).filter(Boolean);\r\n     results = filterPlaylists(results, { language, year });\r\n     results = sortPlaylists(results, sort);\r\n     res.json({ results });\r\n   } catch (e) {\r\n"
+                }
+            ],
+            "date": 1757516003526,
+            "name": "Commit-0",
+            "content": "// /api/playlists/filter\r\nimport { fetchFromJioSaavn } from '../utils/fetcher.js';\r\n\r\nfunction filterPlaylists(playlists, { language, year }) {\r\n  return playlists.filter(playlist => {\r\n    let match = true;\r\n    if (language) match = match && playlist.language?.toLowerCase() === language.toLowerCase();\r\n    if (year) match = match && String(playlist.year) === String(year);\r\n    return match;\r\n  });\r\n}\r\n\r\nfunction sortPlaylists(playlists, sort) {\r\n  if (sort === 'latest') return playlists.sort((a, b) => b.year - a.year);\r\n  if (sort === 'popularity') return playlists.sort((a, b) => (b.playCount || 0) - (a.playCount || 0));\r\n  return playlists;\r\n}\r\n\r\nfunction simplifyPlaylist(playlist) {\r\n  return {\r\n    id: playlist.id,\r\n    title: playlist.name || playlist.title,\r\n    year: parseInt(playlist.year) || null,\r\n    language: playlist.language,\r\n    playCount: parseInt(playlist.playCount) || 0,\r\n    url: playlist.url,\r\n    image: Array.isArray(playlist.image) ? (playlist.image.find(i => i.quality === '500x500')?.url || playlist.image[0]?.url) : playlist.image\r\n  };\r\n}\r\n\r\nexport default async function handler(req, res) {\r\n  const { query, language, year, sort, limit = 30 } = req.query;\r\n  if (!query) return res.status(400).json({ error: 'Missing query param' });\r\n  try {\r\n    const data = await fetchFromJioSaavn('/search/playlists', { \r\n      query, \r\n      page: 0,\r\n      limit: limit \r\n    });\r\n    let results = (data.data?.results || data.results || []).map(simplifyPlaylist);\r\n    results = filterPlaylists(results, { language, year });\r\n    results = sortPlaylists(results, sort);\r\n    res.json({ results });\r\n  } catch (e) {\r\n    res.status(500).json({ error: e.message });\r\n  }\r\n}\r\n"
+        }
+    ]
+}

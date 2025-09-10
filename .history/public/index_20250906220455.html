@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JioSaavn API Wrapper - Documentation</title>
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #6c757d;
+            --success-color: #28a745;
+            --dark-color: #343a40;
+            --light-color: #f8f9fa;
+            --border-color: #dee2e6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: var(--dark-color);
+            scroll-behavior: smooth;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 6rem 2rem;
+            text-align: center;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: white;
+            color: var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-outline:hover {
+            background: white;
+            color: var(--primary-color);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 6rem 2rem;
+            background: var(--light-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--dark-color);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.1rem;
+            color: var(--secondary-color);
+            margin-bottom: 4rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark-color);
+        }
+
+        .feature-card p {
+            color: var(--secondary-color);
+            line-height: 1.6;
+        }
+
+        /* API Documentation */
+        .api-docs {
+            padding: 6rem 2rem;
+        }
+
+        .endpoint-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .endpoint-card {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .endpoint-card:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 8px 25px rgba(0,123,255,0.15);
+        }
+
+        .endpoint-header {
+            background: var(--light-color);
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .endpoint-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--dark-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .endpoint-method {
+            display: inline-block;
+            background: var(--success-color);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .endpoint-body {
+            padding: 1.5rem;
+        }
+
+        .endpoint-url {
+            background: #f1f3f4;
+            padding: 0.75rem;
+            border-radius: 6px;
+            font-family: 'Monaco', monospace;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+            word-break: break-all;
+        }
+
+        .params-list {
+            list-style: none;
+            margin-bottom: 1rem;
+        }
+
+        .params-list li {
+            padding: 0.25rem 0;
+            font-size: 0.875rem;
+            color: var(--secondary-color);
+        }
+
+        .param-name {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .try-button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .try-button:hover {
+            background: #0056b3;
+            transform: translateY(-1px);
+        }
+
+        /* Interactive Demo */
+        .demo {
+            background: var(--light-color);
+            padding: 6rem 2rem;
+        }
+
+        .demo-container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .demo-tabs {
+            display: flex;
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: 2rem;
+        }
+
+        .demo-tab {
+            padding: 1rem 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--secondary-color);
+            transition: all 0.3s ease;
+        }
+
+        .demo-tab.active {
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--primary-color);
+        }
+
+        .demo-content {
+            display: none;
+        }
+
+                                    <option value="popularity">Popularity</option>
+                                    <option value="latest">Latest</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Limit</label>
+                                <input type="number" name="limit" value="20" min="1" max="50">
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn">Search Albums</button>
+                        <button type="button" class="btn btn-secondary" onclick="clearResults()">Clear</button>
+                    </form>
+                </div>
+                
+                <!-- Artists Tab -->
+                <div id="artists" class="tab-content">
+                    <div class="quick-tests">
+                        <div class="quick-test" onclick="quickTest('artists', 'arijit singh', {limit: 5})">
+                            <h4>Find Arijit Singh</h4>
+                            <p>Search for the popular singer</p>
+                        </div>
+                        <div class="quick-test" onclick="quickTest('artists', 'shreya ghoshal', {limit: 5})">
+                            <h4>Shreya Ghoshal</h4>
+                            <p>Find the melody queen</p>
+                        </div>
+                    </div>
+                    
+                    <form onsubmit="testAPI('artists', event)">
+                        <div class="form-group">
+                            <label>Search Query *</label>
+                            <input type="text" name="query" placeholder="Enter artist name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Limit</label>
+                            <input type="number" name="limit" value="15" min="1" max="50">
+                        </div>
+                        
+                        <button type="submit" class="btn">Search Artists</button>
+                        <button type="button" class="btn btn-secondary" onclick="clearResults()">Clear</button>
+                    </form>
+                </div>
+                
+                <!-- Playlists Tab -->
+                <div id="playlists" class="tab-content">
+                    <div class="quick-tests">
+                        <div class="quick-test" onclick="quickTest('playlists', 'bollywood', {language: 'hindi', limit: 10})">
+                            <h4>Bollywood Playlists</h4>
+                            <p>Popular Hindi playlists</p>
+                        </div>
+                        <div class="quick-test" onclick="quickTest('playlists', 'love songs', {limit: 15})">
+                            <h4>Love Songs</h4>
+                            <p>Romantic music collections</p>
+                        </div>
+                    </div>
+                    
+                    <form onsubmit="testAPI('playlists', event)">
+                        <div class="form-group">
+                            <label>Search Query *</label>
+                            <input type="text" name="query" placeholder="Enter playlist theme or name" required>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Language</label>
+                                <select name="language">
+                                    <option value="">All Languages</option>
+                                    <option value="hindi">Hindi</option>
+                                    <option value="tamil">Tamil</option>
+                                    <option value="telugu">Telugu</option>
+                                    <option value="punjabi">Punjabi</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Sort By</label>
+                                <select name="sort">
+                                    <option value="">Default</option>
+                                    <option value="popularity">Popularity</option>
+                                    <option value="latest">Latest</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Limit</label>
+                            <input type="number" name="limit" value="20" min="1" max="50">
+                        </div>
+                        
+                        <button type="submit" class="btn">Search Playlists</button>
+                        <button type="button" class="btn btn-secondary" onclick="clearResults()">Clear</button>
+                    </form>
+                </div>
+                
+                <div id="results"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tabName) {
+            // Hide all tab contents
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => content.classList.remove('active'));
+            
+            // Remove active class from all tabs
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+            
+            // Clear results when switching tabs
+            clearResults();
+        }
+        
+        async function testAPI(category, event) {
+            event.preventDefault();
+            
+            const form = event.target;
+            const formData = new FormData(form);
+            const params = new URLSearchParams();
+            
+            for (let [key, value] of formData.entries()) {
+                if (value.trim()) {
+                    params.append(key, value.trim());
+                }
+            }
+            
+            const url = `/api/${category}/search?${params.toString()}`;
+            await makeRequest(url);
+        }
+        
+        async function quickTest(category, query, extraParams = {}) {
+            const params = new URLSearchParams({ query, ...extraParams });
+            const url = `/api/${category}/search?${params.toString()}`;
+            await makeRequest(url);
+        }
+        
+        async function makeRequest(url) {
+            const resultsDiv = document.getElementById('results');
+            
+            // Show loading
+            resultsDiv.innerHTML = `
+                <div class="results">
+                    <div class="loading">🔄 Loading...</div>
+                </div>
+            `;
+            
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                let resultsClass = 'results';
+                if (!response.ok) {
+                    resultsClass += ' error';
+                }
+                
+                resultsDiv.innerHTML = `
+                    <div class="${resultsClass}">
+                        <h3>API Response (${response.status})</h3>
+                        <p><strong>URL:</strong> ${url}</p>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    </div>
+                `;
+            } catch (error) {
+                resultsDiv.innerHTML = `
+                    <div class="results error">
+                        <h3>Error</h3>
+                        <p><strong>URL:</strong> ${url}</p>
+                        <pre>Error: ${error.message}</pre>
+                    </div>
+                `;
+            }
+        }
+        
+        function clearResults() {
+            document.getElementById('results').innerHTML = '';
+        }
+    </script>
+</body>
+</html>

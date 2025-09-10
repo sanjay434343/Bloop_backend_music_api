@@ -1,0 +1,76 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/**/*.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "public/**/*",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/ui",
+      "dest": "/public/index.html"
+    },
+    {
+      "src": "/api/songs/search",
+      "dest": "/api/songs/search.js"
+    },
+    {
+      "src": "/api/songs/details",
+      "dest": "/api/songs/details.js"
+    },
+    {
+      "src": "/api/songs/filter",
+      "dest": "/api/songs/filter.js"
+    },
+    {
+      "src": "/api/albums/search",
+      "dest": "/api/albums/search.js"
+    },
+    {
+      "src": "/api/albums/details",
+      "dest": "/api/albums/details.js"
+    },
+    {
+      "src": "/api/albums/filter",
+      "dest": "/api/albums/filter.js"
+    },
+    {
+      "src": "/api/artists/search",
+      "dest": "/api/artists/search.js"
+    },
+    {
+      "src": "/api/artists/details",
+      "dest": "/api/artists/details.js"
+    },
+    {
+      "src": "/api/artists/top",
+      "dest": "/api/artists/top.js"
+    },
+    {
+      "src": "/api/playlists/search",
+      "dest": "/api/playlists/search.js"
+    },
+    {
+      "src": "/api/playlists/details",
+      "dest": "/api/playlists/details.js"
+    },
+    {
+      "src": "/api/playlists/filter",
+      "dest": "/api/playlists/filter.js"
+    },
+    {
+      "src": "/",
+      "dest": "/api/index.js"
+    }
+  ],
+  "functions": {
+    "api/**/*.js": {
+      "maxDuration": 30
+    }
+  }
+}

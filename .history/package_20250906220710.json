@@ -1,0 +1,31 @@
+{
+  "name": "jiosaavn-api-wrapper",
+  "version": "1.0.0",
+  "description": "A comprehensive API wrapper for JioSaavn with search, filter, and details endpoints",
+  "type": "module",
+  "main": "api/index.js",
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "echo 'No build step required'",
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {
+    "@vercel/node": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "jiosaavn",
+    "music",
+    "api",
+    "wrapper",
+    "songs",
+    "albums",
+    "artists",
+    "playlists"
+  ]
+}

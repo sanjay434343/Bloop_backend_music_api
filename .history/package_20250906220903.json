@@ -1,0 +1,12 @@
+{
+  "name": "jiosaavn-api-wrapper",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "A comprehensive API wrapper for JioSaavn with search, filter, and details endpoints",
+  "main": "api/index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node index.js",
+    "build": "echo 'Build complete'",
+  }
+}
